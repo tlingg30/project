@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Trips Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav_head">
+            <div class="nav_left">
+                <img class="main_page_logo" src="/images/logo.png" alt="Logo of the organization. A globe and a plan flying around it">
+                <span class="organization_name">TripWU</span>
+            </div>
+
+            <nav class="nav_middle">
+                <ul>
+                    <li><a :href="'index.html?id='+manager_id">Home</a></li>
+                    <li v-if="!manager_id"><a href="Trips.html">Trips</a></li>
+                    <li v-if="manager_id"><a :href="'Trips.html?id='+manager_id">Trips</a></li>
+                    <li v-if="manager_id==4 || manager_id == 6"><a :href="'Feedback.html?id='+manager_id">Feedback</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav_right">
+                <ul>
+                    <li v-if="!manager_id || manager_id === 'null'"><a href="index.html?id=3">Log In</a></li>
+                    <li v-if="manager_id && manager_id !== 'null'"><a :href="'Feedback.html?id='+manager_id">ID: {{manager_id}}</a></li>
+                    <li v-if="manager_id && manager_id !== 'null'"><a href="index.html">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="manager_feedback">
+            <h2>Read reviews from travelers for manager {{user_name[0].first_name}} {{user_name[0].last_name}}:</h2>
+            <div v-if="prev_review.length === 0">
+                <h3 style="color: darkred; text-decoration: underline; margin-top: 10px;">No customer feedback available.</h3>
+            </div>
+            <div class="prev_review" v-for="review in prev_review">
+                <div class="individual_review">
+                    <p>Trip name: {{review.title}}</p>
+                    <h3>{{review.title_feedback}}</h3>
+                    <p>{{review.first_name}} {{review.last_name}}, {{review.feedback_date}}</p>
+                    <p>{{review.comment}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            const vueinst = new Vue({
+                el: '#app',
+                data: {
+                    manager_id: '',
+                    prev_review: [],
+                    user_name: [],
+                    user_id: ''
+                }
+            });
+
+            const queryParams = new URLSearchParams(window.location.search);
+            const searchQuery = queryParams.get('id');
+            vueinst.manager_id = searchQuery;
+
+            var xhttp2 = new XMLHttpRequest();
+            xhttp2.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    vueinst.user_name = JSON.parse(xhttp2.responseText);
+                }
+            };
+            xhttp2.open("GET", "/get_name?id=" + vueinst.manager_id, true);
+            xhttp2.send();
+
+            var xhttp3 = new XMLHttpRequest();
+            xhttp3.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    vueinst.prev_review = JSON.parse(xhttp3.responseText);
+                }
+            };
+            xhttp3.open("GET", "/get_review_manager?manager_id=" + vueinst.manager_id, true);
+            xhttp3.send();
+        };
+    </script>
+</body>
+
+</html>

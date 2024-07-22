@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav_head">
+            <div class="nav_left">
+                <img class="main_page_logo" src="/images/logo.png" alt="Logo of the organization. A globe and a plan flying around it">
+                <span class="organization_name">TripWU</span>
+            </div>
+
+            <nav class="nav_middle">
+                <ul>
+                    <li><a :href="'index.html?id='+user_id">Home</a></li>
+                    <li v-if="!user_id || user_id === 'null'"><a href="Trips.html">Trips</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a :href="'Trips.html?id='+user_id">Trips</a></li>
+                    <li v-if="user_id==4 || user_id == 6"><a :href="'Feedback.html?id='+user_id">Feedback</a></li>
+                    <li><a href="#aboutUs">About</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav_right">
+                <ul>
+                    <li v-if="!user_id || user_id === 'null'"><a href="index.html?id=3">Log In</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a :href="'index.html?id=' + user_id">ID: {{user_id}}</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a href="index.html">Log Out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mainPicTrip">
+            <img class="imageMain" src="/images/lake.jpg" alt="A picture of a blue lake and mountains.">
+            <div class="textImage">
+                <div class="text1">Ready to go on trip in South Australia?</div>
+                <div class="text2">Browse our website with more than 100+ trips you'll remember</div>
+            </div>
+
+        </div>
+        <div id="aboutUs">
+            <div class="textAboutUs">About Us</div>
+            <div class="abtUs_container">
+                <div class="child_container">
+                    <div class="textTitle">Incredible Choice</div>
+                    <div class="textIntro">We provide a wide variety of journeys to locations throughout South Australia. Whether you seek
+                        a tranquil beach getaway, an exciting hiking adventure, or an immersive cultural city tour, we
+                        have the ideal trip for you.</div>
+                </div>
+
+                <div class="child_container">
+                    <div class="textTitle">Customer Support</div>
+                    <div class="textIntro">Delivering exceptional customer service is the central to our operations. From the initial stages
+                        of planning your ideal trip to your safe return home, our dedicated team is committed to
+                        providing continuous support.</div>
+                </div>
+
+                <div class="child_container">
+                    <div class="textTitle">Secured Booking</div>
+                    <div class="textIntro">Securing your peace of mind is our foremost concern. We prioritize the protection of your
+                        personal information and your payment.</div>
+                </div>
+
+                <div class="child_container">
+                    <div class="textTitle">Instant Confirmation</div>
+                    <div class="textIntro">Upon completing your booking, you will receive a confirmation email containing
+                        comprehensive trip details. This allows you to immediately commence planning the remainder of
+                        your adventure, free from any delays.</div>
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer>
+            <ul class="main_page_footer">
+                <li><a href="#aboutUs">About Us</a></li>
+            </ul>
+        </footer>
+    </div>
+    <script>
+        const vueinst = new Vue({
+            el: '#app',
+            data: {
+                user_id: ''
+            },
+            methods: {
+
+            }
+        });
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchQuery = queryParams.get('id');
+        vueinst.user_id = searchQuery;
+        console.log(searchQuery);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Individual Trip Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav_head">
+            <div class="nav_left">
+                <img class="main_page_logo" src="/images/logo.png" alt="Logo of the organization. A globe and a plan flying around it">
+                <span class="organization_name">TripWU</span>
+            </div>
+
+            <nav class="nav_middle">
+                <ul>
+                    <li><a :href="'index.html?id='+user_id">Home</a></li>
+                    <li v-if="!user_id"><a href="Trips.html">Trips</a></li>
+                    <li v-if="user_id"><a :href="'Trips.html?id='+user_id">Trips</a></li>
+                    <li v-if="user_id==4 || user_id == 6"><a :href="'Feedback.html?id='+user_id">Feedback</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav_right">
+                <ul>
+                    <li v-if="!user_id || user_id === 'null'"><a :href="'IndividualTrip.html?trip_id='+trip_id + '&id=3'">Log In</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a :href="'Trips.html?id=' + user_id">ID: {{user_id}}</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a href="index.html">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="IndiTripContent">
+            <div class="header">
+                <div class="title">
+                    <h1>{{ trip_data[0].title }}</h1>
+                    <p><a href="#review">See reviews</a></p>
+                </div>
+                <div class="header_container">
+                    <div class="trip_image">
+                        <img :src="'/images/' + trip_data[0].trip_id + '.jpg'" alt="Scenery picture of the trip location">
+                    </div>
+                    <div class="trip_regist">
+                        <h2>Only A{{ trip_data[0].price }}</h2>
+                        <label for="num_traveler">Number of travelers:</label>
+                        <input type="number" id="num_traveler" name="num_traveler" value="1" min="1" max="50" />
+                        <button type="button">Reserve Spot</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="trip_content">
+                <div class="overview">
+                    <h2>Overview</h2>
+                    <p>{{ trip_data[0].description }}</p>
+                </div>
+
+                <div class="date">
+                    <h2>Start and End date</h2>
+                    <p>From {{ trip_data[0].start_date }} To {{ trip_data[0].end_date }}</p>
+                </div>
+
+                <div class="pickUpLocation">
+                    <h2>Meeting Point</h2>
+                    <p>CBD Adelaide</p>
+                    <p>Check-in is from 7.15am to 7.45am at Adelaide CBD. The tour
+                        departs at 8.00am sharp. Return transfers are available for an additional cost. You must contact
+                        the tour manager to book.</p>
+                </div>
+            </div>
+
+            <div id="review">
+                <h2>Reviews</h2>
+                <p>Reviews by travellers</p>
+                <div class="add_review" v-if=" new Date(trip_data[0].start_date) < Date.now()">
+                    <h3>Leave your review:</h3>
+                    <div v-if="user_id && user_id !== 'null'">
+                        <label for="fbTitle">Feedback Title:</label>
+                        <input type="text" id="fbTitle" name="fbTitle" required minlength="1" size="10"
+                            v-model="fbTitle" />
+                        <label for="comment">Comment:</label>
+                        <input type="text" id="comment" name="comment" required minlength="1" size="10"
+                            v-model="comment" />
+
+                        <label for="Post_as">Post as:</label>
+                        <select name="Post_as" id="Post_as" v-model="Post_as">
+                            <option :value="user_id">{{user_name[0].first_name}} {{user_name[0].last_name}}</option>
+                            <option value="Anonymous">Anonymous</option>
+                        </select>
+                        <button type="button" @click="Post()">Post</button>
+                    </div>
+                    <h3 v-if="!user_id || user_id === 'null'" style="color:darkred; text-decoration: underline;">Please log in first to leave
+                        review.</h3>
+                </div>
+                <h2>Read previous reviews from our travelers:</h2>
+                <h3 v-if=" new Date(trip_data[0].start_date) > Date.now()"
+                    style="color:darkred; text-decoration: underline;"> Trip hasn't started yet. Please return to our
+                    customer review later.</h3>
+                <div class="prev_review" v-for="review in prev_review">
+                    <div class="individual_review">
+                        <h3>{{review.title_feedback}}</h3>
+                        <p>{{review.first_name}} {{review.last_name}}, {{review.feedback_date}}</p>
+                        <p>{{review.comment}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const vueinst = new Vue({
+            el: '#app',
+            data: {
+                trip_id: '',
+                trip_data: [],
+                user_id: '',
+                Post_as: '',
+                user_name: [],
+                prev_review: [],
+                fbTitle: '',
+                comment: '',
+            },
+            methods: {
+                Post() {
+                    var xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState === 4 && this.status === 200) {
+                            window.location.reload();
+                        }
+                    };
+                    xhttp.open("POST", "/post_comment", true);
+                    xhttp.setRequestHeader("Content-Type", "application/json");
+                    xhttp.send(JSON.stringify({
+                        fbTitle: this.fbTitle,
+                        comment: this.comment,
+                        Post_as: this.Post_as,
+                        trip_id: this.trip_id,
+                        user_id: this.user_id
+                    }));
+                }
+            }
+        });
+
+        const queryParams = new URLSearchParams(window.location.search);
+        const searchQuery = queryParams.get('trip_id');
+        vueinst.trip_id = searchQuery;
+        const searchQuery2 = queryParams.get('id');
+        vueinst.user_id = searchQuery2;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                vueinst.trip_data = JSON.parse(xhttp.responseText);
+            }
+        };
+        xhttp.open("GET", "/get_trip?trip_id=" + vueinst.trip_id, true);
+        xhttp.send();
+
+        var xhttp2 = new XMLHttpRequest();
+        xhttp2.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                vueinst.user_name = JSON.parse(xhttp2.responseText);
+            }
+        };
+        xhttp2.open("GET", "/get_name?id=" + vueinst.user_id, true);
+        xhttp2.send();
+
+        var xhttp3 = new XMLHttpRequest();
+        xhttp3.onreadystatechange = function () {
+            if (this.readyState === 4 && this.status === 200) {
+                vueinst.prev_review = JSON.parse(xhttp3.responseText);
+            }
+        };
+        xhttp3.open("GET", "/get_review?trip_id=" + vueinst.trip_id, true);
+        xhttp3.send();
+
+    </script>
+</body>
+
+</html>

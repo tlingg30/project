@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorting Trips Page</title>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="nav_head">
+            <div class="nav_left">
+                <img class="main_page_logo" src="/images/logo.png" alt="Logo of the organization. A globe and a plan flying around it">
+                <span class="organization_name">TripWU</span>
+            </div>
+
+            <nav class="nav_middle">
+                <ul>
+                    <li><a :href="'index.html?id='+user_id">Home</a></li>
+                    <li v-if="!user_id"><a href="Trips.html">Trips</a></li>
+                    <li v-if="user_id"><a :href="'Trips.html?id='+user_id">Trips</a></li>
+                    <li v-if="user_id==4 || user_id == 6"><a :href="'Feedback.html?id='+user_id">Feedback</a></li>
+                </ul>
+            </nav>
+
+            <div class="nav_right">
+                <ul>
+                    <li v-if="!user_id || user_id === 'null'"><a href="Trips.html?id=3">Log In</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a :href="'Trips.html?id=' + user_id">ID: {{user_id}}</a></li>
+                    <li v-if="user_id && user_id !== 'null'"><a href="index.html">Log Out</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="trip">
+            <div>
+                <h2>Trips in South Australia</h2>
+            </div>
+            <div class="tripBody">
+                <div class="tripSortNav">
+                    <div class="hasTravelled">
+                        <h3>Type of Trips:</h3>
+                        <input checked type="radio" id="allTrips" name="tripType" value="allTrips" v-model="tripType" />
+                        <label for="tripType"> All trips</label><br>
+                        <input type="radio" id="upComming" name="tripType" value="upComming" v-model="tripType" />
+                        <label for="tripType"> Upcoming trips</label><br>
+                        <input type="radio" id="hasTravelled" name="tripType" value="hasTravelled" v-model="tripType"
+                            v-if="user_id && user_id !== 'null'" />
+                        <label for="tripType" v-if="user_id && user_id !== 'null'"> Trips have travelled</label><br>
+                    </div>
+                    <div class="sorting">
+                        <div>
+                            <h3>Sorting By:</h3>
+                        </div>
+                        <div class="sort_by_dest">
+                            <label for="dest">Choose a destination:</label>
+                            <select name="dest" id="dest" v-model="destination">
+                                <option value="Kangaroo Island">Kangaroo Island</option>
+                                <option value="Marion Bay">Marion Bay</option>
+                                <option value="McLaren Vale">McLaren Vale</option>
+                                <option value="Victor Harbor">Victor Harbor</option>
+                            </select>
+                        </div>
+                        <div class="sort_by_duration">
+                            <label for="duration">Duration</label>
+                            <select name="duration" id="duration" v-model="duration">
+                                <option value="aDay">Within a day</option>
+                                <option value="1_3days">1 to 3 days</option>
+                                <option value="more3Days">3+ days</option>
+                            </select>
+                        </div>
+                        <div class="start_date">
+                            <label for="start_date">Start date:</label>
+                            <select name="start_date" id="start_date" v-model="start_date">
+                                <option value="nextWeek">Next week</option>
+                                <option value="next2Week">In 2 weeks</option>
+                                <option value="next3Week">In 3 weeks</option>
+                                <option value="nextMonth">Next month</option>
+                            </select>
+                        </div>
+                        <div class="end_date">
+                            <label for="end_date">End date:</label>
+                            <select name="end_date" id="end_date" v-model="end_date">
+                                <option value="nextWeek">Next week</option>
+                                <option value="next2Week">In 2 weeks</option>
+                                <option value="next3Week">In 3 weeks</option>
+                                <option value="nextMonth">Next month</option>
+                            </select>
+                        </div>
+                        <button type="button" class="submitButton" @click="filterTrip()">Sort</button>
+                    </div>
+                </div>
+
+                <div class="tripDisplayRight">
+                    <div>
+                        <p>South Australia is renowned for its groundbreaking and exclusive attractions. Whether you're
+                            drawn to its vibrant cities, rich cultural heritage, or renowned
+                            wine regions, South Australia promises unforgettable moments at every turn. Considering a
+                            trip in South Australia? we offer a selection of extraordinary experiences to elevate your
+                            life's journey.</p>
+                    </div>
+                    <div class="tripList" v-for="trip in trip_data" :key="trip.trip_id">
+                        <div class="individualTrip">
+                            <a :href="'IndividualTrip.html?trip_id=' + trip.trip_id + '&id=' + user_id">
+                                <div class="tripImage">
+                                    <img :src="'/images/' + trip.trip_id + '.jpg'" alt="Scenery picture of the trip location">
+                                </div>
+                                <div class="tripContent">
+                                    <div class="headerTripContent">
+                                        <h2>{{ trip.title }}</h2>
+                                        <h2>{{ trip.price }}</h2>
+                                    </div>
+                                    <p>{{ trip.description }}</p>
+                                    <p>{{ trip.duration }} days</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        window.onload = function () {
+            const vueinst = new Vue({
+                el: '#app',
+                data: {
+                    user_id: '',
+                    trip_data: [],
+                    destination: '',
+                    duration: '',
+                    start_date: '',
+                    end_date: '',
+                    tripType: "allTrips"
+                },
+                methods: {
+                    filterTrip() {
+                        var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function () {
+                            if (this.readyState === 4 && this.status === 200) {
+                                vueinst.trip_data = JSON.parse(xhttp.responseText);
+                                // console.log(vueinst.trip_data);
+                            }
+                        };
+                        xhttp.open("POST", "/get_trip_sorted", true);
+                        xhttp.setRequestHeader("Content-Type", "application/json");
+                        xhttp.send(JSON.stringify({
+                            destination: this.destination,
+                            duration: this.duration,
+                            start_date: this.start_date,
+                            end_date: this.end_date,
+                            tripType: this.tripType,
+                            user_id: this.user_id
+                        }));
+                    }
+                }
+            });
+
+            const queryParams = new URLSearchParams(window.location.search);
+            const searchQuery = queryParams.get('id');
+            vueinst.user_id = searchQuery;
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    vueinst.trip_data = JSON.parse(xhttp.responseText);
+                }
+            };
+            xhttp.open("GET", "/get_trip", true);
+            xhttp.send();
+        };
+    </script>
+</body>
+
+</html>

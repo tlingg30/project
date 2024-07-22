@@ -1,0 +1,509 @@
+/* General reset and box-sizing */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Container for the navigation bar */
+.nav_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-bottom: 1px solid #4e88a9;
+}
+
+/* Left section: logo and organization name */
+.nav_left {
+  display: flex;
+  align-items: center;
+  color: #1c465b
+}
+
+.main_page_logo {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.organization_name {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+/* Middle section: navigation links */
+.nav_middle {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  color: #1c465b
+}
+
+.nav_middle ul {
+  display: flex;
+  list-style: none;
+}
+
+.nav_middle ul li {
+  margin: 0 25px;
+  padding: 8px;
+}
+
+.nav_middle ul li:hover {
+  border-bottom: 5px solid #4e88a9;
+}
+
+.nav_middle ul li a {
+  text-decoration: none;
+  color: #1c465b;
+  font-size: 1.5em;
+}
+
+.nav_middle ul li a:hover{
+  color: #83afc4;
+}
+
+/* Right section: account menu */
+.nav_right ul {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  color: #1c465b
+}
+
+.nav_right ul li {
+  margin-left: 25px;
+}
+
+.nav_right ul li:hover {
+  border-bottom: 5px solid #4e88a9;
+}
+
+.nav_right ul li a {
+  text-decoration: none;
+  color: #1c465b;
+  font-size: 1.5em;
+}
+
+.nav_right ul li a:hover{
+  color: #83afc4;
+}
+
+.textImage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+}
+
+.text1{
+  font-size: 4em;
+}
+
+.text2{
+  font-size: 1.5em;
+}
+
+.imageMain{
+  width:100%;
+  height: 560px;
+  object-fit: cover;
+}
+
+#aboutUs {
+  text-align: center;
+  padding: 20px;
+}
+
+.textAboutUs{
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  font-weight: bold;
+  padding:15px;
+  color:#1c465b;
+}
+
+.abtUs_container {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 90%;
+}
+
+.child_container{
+  border: 3px solid #83afc4;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-left: 5%;
+  width:20%;
+  padding: 7px;
+}
+
+.child_container:hover{
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  border: 3px solid #4c7690;
+}
+
+.textIntro{
+  text-align: justify;
+  padding: 10px;
+}
+
+.textTitle{
+  font-size: 1.4em;
+  margin-bottom: 10px;
+  color: #4c7690;
+  padding-top: 5px;
+  font-weight: bold;
+}
+
+footer {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #f8f8f8;
+  border-top: 1px solid #ddd;
+}
+
+.main_page_footer {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+}
+
+.main_page_footer li {
+  margin: 0 10px;
+}
+
+.main_page_footer li a {
+  text-decoration: none;
+  color: #333;
+}
+
+/* Trip html */
+
+.trip {
+  margin-top: 20px;
+  margin: 0 10%;
+
+}
+
+.trip div:first-child > h2{
+  margin-top: 20px;
+}
+
+.tripBody{
+  display: flex;
+  justify-content: center;
+}
+
+.tripSortNav {
+  flex: 1;
+  max-width: 30%;
+  margin-right: 20px;
+  background-color: #f4f4f4;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.tripSortNav h3 {
+  margin-bottom: 7px;
+}
+
+.hasTravelled{
+  margin-bottom: 10px;
+}
+
+.hasTravelled label{
+  margin-bottom: 5px;
+}
+
+.hasTravelled input{
+  margin: 10px;
+}
+
+.sorting div {
+  margin-bottom: 20px;
+}
+
+.sorting label{
+  display: block;
+  margin-bottom: 5px;
+}
+
+.sorting select{
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.submitButton{
+  width: 100%;
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.tripDisplayRight {
+  flex: 3;
+  max-width: 70%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.tripDisplayRight > div:first-child {
+  margin-bottom: 20px;
+}
+
+.individualTrip {
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 200px;
+}
+
+.individualTrip a{
+  display: flex;
+  text-decoration: none;
+  color: black;
+}
+
+.individualTrip:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.tripImage{
+  max-width: 30%;
+  padding-right: 15px;
+  height: 100%;
+}
+
+.tripImage img {
+  position: relative;
+  max-width:100%;
+  max-height: 90%;
+  top: 10px;
+  left:10px;
+  object-fit: cover;
+  border-radius: 5px;
+  align-items: center;
+}
+
+.tripContent {
+  padding: 10px;
+  width:70%;
+}
+
+.headerTripContent{
+  display: flex;
+  justify-content: space-between;
+}
+
+.tripContent h2 {
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.tripContent p {
+  margin-bottom: 10px;
+  font-size: 0.9em;
+  color: #666;
+}
+
+/* Individual trip page */
+.IndiTripContent{
+  margin:0 10%;
+  margin-top: 25px;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #4e88a9;
+  padding-bottom: 30px;
+}
+
+.title h1 {
+  font-size: 2em;
+  margin: 0;
+}
+
+.title p a {
+  color: black;
+  text-decoration: none;
+}
+.title p a:hover {
+  text-decoration: underline;
+}
+
+.header_container {
+  margin-top: 15px;
+  display: flex;
+  width: 100%;
+}
+
+.trip_image {
+  width: 70%;
+}
+
+.trip_image img{
+  width:95%;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.trip_regist {
+  width: 30%;
+  border: 1px solid #4e88a9;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+
+.trip_regist h2 {
+  color: #1c465b;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.trip_regist label {
+  margin: 10px 0 5px 0;
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.trip_regist input,
+.trip_regist button {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 1em;
+}
+
+.trip_regist button{
+  background-color: #69a0c1;
+}
+
+.trip_regist button:hover{
+  background-color: #4980a0;
+}
+
+.trip_content > * {
+  margin-top: 30px;
+  margin-bottom: 50px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #4e88a9;
+}
+
+.trip_content h2 {
+  margin-top: 0;
+  color: #1c465b;
+}
+
+.trip_content p {
+  margin-top:10px;
+  line-height: 1.6;
+  color: rgb(73, 73, 73);
+}
+
+.pickUpLocation p {
+  margin-top:10px;
+  line-height: 1.6;
+  color: rgb(73, 73, 73);
+}
+
+#review {
+  margin-top: 40px;
+}
+
+#review h2 {
+  color: #1c465b;
+}
+
+#review > p{
+  margin-top:5px;
+}
+
+.add_review {
+  margin-top: 20px;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 35px;
+}
+
+.add_review h3 {
+  margin-top: 0;
+  color: #4e88a9;
+}
+
+.add_review label {
+  display: block;
+  margin: 12px 0 6px 0;
+}
+
+.add_review input,
+.add_review select,
+.add_review button {
+  padding: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  font-size: 1em;
+}
+
+.add_review button {
+  background-color: #69a0c1;
+}
+
+.add_review button:hover {
+  background-color: #4980a0;
+}
+
+.prev_review {
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.prev_review h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.prev_review p {
+  margin: 5px 0;
+  color: #666;
+}
+
+button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.manager_feedback{
+  margin:0 10%;
+  margin-top: 25px;
+}
