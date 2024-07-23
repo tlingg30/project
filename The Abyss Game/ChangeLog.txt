@@ -1,0 +1,34 @@
+1. We encountered some issues with including header files for some of the class -> solution was to make Monster protected  
+
+2. attack() and take_attack() functions weren't working -> check spelling in variables and function names (strength not stregth)
+
+3. Big changes for load and save game function
+    - Allow 2 game saved instead of 1 
+    - Let user choose between the 2 
+    - To do this: use maps and vectors container
+
+4. Issue when taking in inputs from the user: 
+    - string with space - e.g. Linh Thuy  Nguyen instead of LinhThuyNguyen 
+    fixed using cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    -> this ignore Linh and then delete everything else 
+    - Use exception handling try and catch
+
+5. Undefined reference when using a function included in a header file
+    - Files included header was in circular dependency 
+    - Fixed by changing the include header 5. Static variable issues
+    
+6.  Static relating issues 
+    - Havent initialize static variable 
+    - Fixed by initialize it in main.cpp  
+
+7. 3 level inheritance
+    - struggling when deciding the parents and child class, we initially wanted to make 2 new classes 
+      named Sky and Earth and inherrited from Monster then Dragon, Aqua, ... will inherit from Sky and Earth. However, this 
+      seems to be requiring too much of changes in our our code. Therefore, we've switched to creating another four subclasess
+      of class Dragon, Aqua, ... which are SuperDragon, SuperAqua, ... They will have another special skill (with special names)
+      along sides with critical attacks 
+      e.g. SuperDragon (Undying Flame), SuperSerbine (Wings of Chaos), ... 
+
+8. UI implementation
+    - Added new game title 
+    - Clearing screen on terminal after inputs 
